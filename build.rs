@@ -8,7 +8,8 @@ fn main() {
      * must define an incompatible type to retain backwards-compatibility.
      */
     if rustc_minor_version().expect("Failed to get rustc version") >= 30 {
-        println!("cargo:rustc-cfg=core_cvoid");
+        // println!("cargo:rustc-cfg=core_cvoid");
+        println!("");
     }
 }
 
