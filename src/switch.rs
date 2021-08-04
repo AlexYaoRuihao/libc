@@ -37,21 +37,35 @@ pub type wchar_t = u32;
 pub const INT_MIN: c_int = -2147483648;
 pub const INT_MAX: c_int = 2147483647;
 
+// cfg_if! {
+//     if #[cfg(core_cvoid)] {
+//         pub use core::ffi::c_void;
+//     } else {
+//         // Use repr(u8) as LLVM expects `void*` to be the same as `i8*` to help
+//         // enable more optimization opportunities around it recognizing things
+//         // like malloc/free.
+//         #[repr(u8)]
+//         pub enum c_void {
+//             // Two dummy variants so the #[repr] attribute can be used.
+//             #[doc(hidden)]
+//             __variant1,
+//             #[doc(hidden)]
+//             __variant2,
+//         }
+//     }
+// }
+
 cfg_if! {
-    if #[cfg(core_cvoid)] {
-        pub use core::ffi::c_void;
-    } else {
-        // Use repr(u8) as LLVM expects `void*` to be the same as `i8*` to help
-        // enable more optimization opportunities around it recognizing things
-        // like malloc/free.
-        #[repr(u8)]
-        pub enum c_void {
-            // Two dummy variants so the #[repr] attribute can be used.
-            #[doc(hidden)]
-            __variant1,
-            #[doc(hidden)]
-            __variant2,
-        }
+    // Use repr(u8) as LLVM expects `void*` to be the same as `i8*` to help
+    // enable more optimization opportunities around it recognizing things
+    // like malloc/free.
+    #[repr(u8)]
+    pub enum c_void {
+        // Two dummy variants so the #[repr] attribute can be used.
+        #[doc(hidden)]
+        __variant1,
+        #[doc(hidden)]
+        __variant2,
     }
 }
 

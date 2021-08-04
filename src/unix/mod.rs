@@ -1149,20 +1149,34 @@ cfg_if! {
     }
 }
 
+// cfg_if! {
+//     if #[cfg(core_cvoid)] {
+//         pub use core::ffi::c_void;
+//     } else {
+//         // Use repr(u8) as LLVM expects `void*` to be the same as `i8*` to help
+//         // enable more optimization opportunities around it recognizing things
+//         // like malloc/free.
+//         #[repr(u8)]
+//         pub enum c_void {
+//             // Two dummy variants so the #[repr] attribute can be used.
+//             #[doc(hidden)]
+//             __variant1,
+//             #[doc(hidden)]
+//             __variant2,
+//         }
+//     }
+// }
+
 cfg_if! {
-    if #[cfg(core_cvoid)] {
-        pub use core::ffi::c_void;
-    } else {
-        // Use repr(u8) as LLVM expects `void*` to be the same as `i8*` to help
-        // enable more optimization opportunities around it recognizing things
-        // like malloc/free.
-        #[repr(u8)]
-        pub enum c_void {
-            // Two dummy variants so the #[repr] attribute can be used.
-            #[doc(hidden)]
-            __variant1,
-            #[doc(hidden)]
-            __variant2,
-        }
+    // Use repr(u8) as LLVM expects `void*` to be the same as `i8*` to help
+    // enable more optimization opportunities around it recognizing things
+    // like malloc/free.
+    #[repr(u8)]
+    pub enum c_void {
+        // Two dummy variants so the #[repr] attribute can be used.
+        #[doc(hidden)]
+        __variant1,
+        #[doc(hidden)]
+        __variant2,
     }
 }
